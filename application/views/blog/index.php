@@ -6,7 +6,10 @@
 	<div class="content"><?php echo $post['content']; ?></div>
 
 	<?php if ($teaser) : ?>
-		<?php echo anchor('blog/' . $post['slug'], 'Read more'); ?>
+		<?php echo anchor('blog/show/' . $post['slug'], 'Read more'); ?>
+	<?php else : ?>
+		<?php echo anchor('blog/update/' . $post['slug'], 'Update'); ?>
+		<?php echo anchor('blog/delete/' . $post['slug'], 'Delete'); ?>
 	<?php endif; ?>
 </article>
 

@@ -44,11 +44,7 @@ $route['hi/(:any)'] = 'tools/message/$1';
 // $route['news'] = 'blog';
 
 // blog
-$route['blog/create'] = 'blog/create';
-$route['blog/update'] = 'blog/update';
-$route['blog/update/(:any)'] = 'blog/update/$1';
-$route['blog/(:any)'] = 'blog/show/$1';
-$route['blog'] = 'blog';
+
 
 
 /* End of file routes.php */

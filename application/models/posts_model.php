@@ -44,4 +44,8 @@ class Posts_model extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->update('posts', $data);
 	}
+
+	public function delete_posts($slug) {
+		$this->db->delete('posts', array('slug' => $slug));
+	}
 }

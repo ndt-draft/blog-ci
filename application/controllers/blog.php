@@ -95,11 +95,22 @@ class Blog extends CI_Controller {
 		$this->load->view('blog/update', $data);
 	}
 
-	public function delete($id = '') {
+	public function delete($slug = '') {
+		$this->load->helper(array('form', 'url'));
+
+		if ( $this->input->post('delete') ) {
+			$this->posts_model->delete_posts($slug);
+			redirect('/blog', 'refresh');
+		} elseif ( $this->input->post('cancel') ) {
+			redirect('/blog', 'refresh');
+		}
+
 		$this->load->view('blog/delete');
 	}
 
 	public function show($slug = '') {
+		$this->load->helper(array('url'));
+
 		$data['posts'] = $this->posts_model->get_posts($slug);
 		$data['teaser'] = false;
 		$this->load->view('blog/header');
