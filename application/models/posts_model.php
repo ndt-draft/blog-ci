@@ -16,6 +16,13 @@ class Posts_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function search_posts($keyword = '') {
+		$this->db->like('title', $keyword);
+		$query = $this->db->get('posts');
+
+		return $query->result_array();
+	}
+
 	public function set_posts() {
 		$this->load->helper('url');
 

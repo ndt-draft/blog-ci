@@ -11,9 +11,50 @@ class Blog extends CI_Controller {
 
 		$data['posts'] = $this->posts_model->get_posts();
 		$data['teaser'] = true;
+
 		$this->load->view('blog/header');
 		$this->load->view('blog/index', $data);
 		$this->load->view('blog/footer');
+	}
+
+	/*public function search($query = '') {
+		$this->load->helper(array('form', 'url'));
+
+		if ( $this->input->get('search') ) {
+			redirect('blog/search/' . urlencode($this->input->get('search')), 'refresh');
+			exit();
+		}
+
+		if (empty($query)) {
+			$this->load->view('blog/header');
+			$this->load->view('blog/form-search');
+			$this->load->view('blog/footer');
+		} else {
+			$query = urldecode($query);
+			$data['posts'] = $this->posts_model->search_posts($query);
+			$data['teaser'] = true;
+			$this->load->view('blog/header');
+			$this->load->view('blog/index', $data);
+			$this->load->view('blog/footer');
+		}
+	}*/
+
+	public function search() {
+		$this->load->helper(array('form', 'url'));
+
+		$keyword = urldecode($this->input->get('search'));
+
+		if (empty($keyword)) {
+			$this->load->view('blog/header');
+			$this->load->view('blog/form-search');
+			$this->load->view('blog/footer');
+		} else {
+			$data['posts'] = $this->posts_model->search_posts($keyword);
+			$data['teaser'] = true;
+			$this->load->view('blog/header');
+			$this->load->view('blog/index', $data);
+			$this->load->view('blog/footer');
+		}
 	}
 
 	public function create() {
