@@ -8,8 +8,34 @@ class Blog extends CI_Controller {
 
 	public function index() {
 		$this->load->helper(array('url'));
+		$this->load->library('pagination');
+		
+		$config = array(
+			'base_url' => site_url() . '/blog/index',
+			'total_rows' => $this->posts_model->record_count(),
+			'per_page' => 3,
+			'full_tag_open' => '<ul class="pagination">',
+			'full_tag_close' => '</ul>',
+			'cur_tag_open' => '<li class="active"><span>',
+			'cur_tag_close' => '</span></li>'
+		);
 
-		$data['posts'] = $this->posts_model->get_posts();
+		$config['num_tag_open'] =
+			$config['first_tag_open'] = 
+			$config['next_tag_open'] = 
+			$config['prev_tag_open'] = 
+			$config['last_tag_open'] = '<li>';
+
+		$config['first_tag_close'] =
+			$config['num_tag_close'] = 
+			$config['next_tag_close'] = 
+			$config['prev_tag_close'] = 
+			$config['last_tag_close'] = '</li>';
+		
+		$this->pagination->initialize($config);
+
+		$data['links'] = $this->pagination->create_links();
+		$data['posts'] = $this->posts_model->get_posts(false, $config['per_page'], $this->uri->segment(3));
 		$data['is_home'] = true;
 		$data['teaser'] = true;
 

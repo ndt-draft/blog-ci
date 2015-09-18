@@ -20,3 +20,5 @@
 	</article>
 
 <?php endforeach; ?>
+
+<?php if (isset($links)) echo $links; ?>

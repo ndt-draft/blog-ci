@@ -6,8 +6,13 @@ class Posts_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function get_posts($slug = false) {
+	public function record_count() {
+		return $this->db->count_all('posts');
+	}
+
+	public function get_posts($slug = false, $limit = 0, $start = 0) {
 		if ($slug === false) {
+			$this->db->limit($limit, $start);
 			$query = $this->db->get('posts');
 			return $query->result_array();
 		}
