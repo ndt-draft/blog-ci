@@ -10,9 +10,10 @@ class Blog extends CI_Controller {
 		$this->load->helper(array('url'));
 
 		$data['posts'] = $this->posts_model->get_posts();
+		$data['is_home'] = true;
 		$data['teaser'] = true;
 
-		$this->load->view('blog/header');
+		$this->load->view('blog/header', $data);
 		$this->load->view('blog/index', $data);
 		$this->load->view('blog/footer');
 	}
@@ -42,16 +43,18 @@ class Blog extends CI_Controller {
 	public function search() {
 		$this->load->helper(array('form', 'url'));
 
+		$data['is_search'] = true;
+
 		$keyword = urldecode($this->input->get('search'));
 
 		if (empty($keyword)) {
-			$this->load->view('blog/header');
+			$this->load->view('blog/header', $data);
 			$this->load->view('blog/form-search');
 			$this->load->view('blog/footer');
 		} else {
 			$data['posts'] = $this->posts_model->search_posts($keyword);
 			$data['teaser'] = true;
-			$this->load->view('blog/header');
+			$this->load->view('blog/header', $data);
 			$this->load->view('blog/index', $data);
 			$this->load->view('blog/footer');
 		}
@@ -67,12 +70,14 @@ class Blog extends CI_Controller {
 			'slug' => ''
 		);
 
+		$data['is_create'] = true;
+
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('content', 'Content', 'required');
 		$this->form_validation->set_rules('slug', 'Slug', 'required|is_unique[posts.slug]');
 
 		if ( $this->form_validation->run() === false ) {
-			$this->load->view('blog/header');
+			$this->load->view('blog/header', $data);
 			$this->load->view('blog/create', $data);
 			$this->load->view('blog/footer');
 		} else {

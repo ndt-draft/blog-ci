@@ -1,0 +1,17 @@
+.site {
+	width: 50%;
+	margin: 2em auto;
+}
+
+.entry-content {
+	margin-bottom: 1em;
+}
+
+.post {
+	padding-bottom: 1em;
+	border-bottom: 1px solid #ddd;
+}
+
+.post:last-child {
+	border-bottom: none;
+}
