@@ -58,7 +58,7 @@ class Blog extends CI_Controller {
 	}
 
 	public function create() {
-		$this->load->helper(array('form'));
+		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 
 		$data = array(
@@ -133,7 +133,9 @@ class Blog extends CI_Controller {
 			}
 		}
 
+		$this->load->view('blog/header');
 		$this->load->view('blog/update', $data);
+		$this->load->view('blog/footer');
 	}
 
 	public function delete($slug = '') {
@@ -146,7 +148,9 @@ class Blog extends CI_Controller {
 			redirect('/blog', 'refresh');
 		}
 
+		$this->load->view('blog/header');
 		$this->load->view('blog/delete');
+		$this->load->view('blog/footer');
 	}
 
 	public function show($slug = '') {
