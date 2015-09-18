@@ -1,4 +1,4 @@
-<h1>Are you sure you want to delete?</h1>
+<h2>Are you sure you want to delete?</h2>
 <p>This action cannot be undone!</p>
 
 <?php echo form_open(); ?>

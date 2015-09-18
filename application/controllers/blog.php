@@ -45,7 +45,7 @@ class Blog extends CI_Controller {
 
 		$data['is_search'] = true;
 
-		$keyword = urldecode($this->input->get('search'));
+		$keyword = urldecode(trim($this->input->get('search')));
 
 		if (empty($keyword)) {
 			$this->load->view('blog/header', $data);

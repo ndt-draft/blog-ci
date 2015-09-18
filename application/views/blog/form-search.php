@@ -1,4 +1,4 @@
-<h1>Search</h1>
+<h2>Search</h2>
 
 <form action="" method="get" class="form-inline">
 	<div class="form-group">
