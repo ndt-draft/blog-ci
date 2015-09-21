@@ -42,6 +42,9 @@ class Blog extends CI_Controller {
 		$this->load->view('blog/header', $data);
 		$this->load->view('blog/index', $data);
 		$this->load->view('blog/footer');
+
+		// when delete post, must clear
+		$this->output->cache(1);
 	}
 
 	/*public function search($query = '') {
@@ -78,12 +81,25 @@ class Blog extends CI_Controller {
 			$this->load->view('blog/form-search');
 			$this->load->view('blog/footer');
 		} else {
-			$data['posts'] = $this->posts_model->search_posts($keyword);
+
+			// set cached key
+			$cached_key = url_title($keyword, '_', true);
+			
+			// load driver
+			$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+			// start caching here
+			if ( ! $data['posts'] = $this->cache->get('search_' . $cached_key) ) {
+				$data['posts'] = $this->posts_model->search_posts($keyword);
+				$this->cache->save('search_' . $cached_key, $data['posts'], 60);
+			}
+
 			$data['teaser'] = true;
 			$this->load->view('blog/header', $data);
 			$this->load->view('blog/index', $data);
 			$this->load->view('blog/footer');
 		}
+
 	}
 
 	public function create() {
@@ -108,9 +124,9 @@ class Blog extends CI_Controller {
 			$this->load->view('blog/footer');
 		} else {
 			$this->posts_model->set_posts();
+			$this->clear_all_cache();
 			redirect('/blog', 'refresh');
 		}
-
 	}
 
 	public function update($slug = '') {
@@ -160,6 +176,7 @@ class Blog extends CI_Controller {
 			// pass
 			} else {
 				$this->posts_model->update_posts($id);
+				$this->clear_all_cache();
 				redirect('/blog', 'refresh');
 			}
 		}
@@ -174,6 +191,7 @@ class Blog extends CI_Controller {
 
 		if ( $this->input->post('delete') ) {
 			$this->posts_model->delete_posts($slug);
+			$this->clear_all_cache();
 			redirect('/blog', 'refresh');
 		} elseif ( $this->input->post('cancel') ) {
 			redirect('/blog', 'refresh');
@@ -192,5 +210,49 @@ class Blog extends CI_Controller {
 		$this->load->view('blog/header');
 		$this->load->view('blog/index', $data);
 		$this->load->view('blog/footer');
+
+		// when delete post, must clear
+		$this->output->cache(1);
+	}
+
+	/**
+	 * @see http://stackoverflow.com/questions/7422013/how-is-clear-page-cache-in-the-codeigniter
+	 */
+	function delete_cache($uri_string=null) {
+	    $CI =& get_instance();
+	    $path = $CI->config->item('cache_path');
+	    $path = rtrim($path, DIRECTORY_SEPARATOR);
+
+	    $cache_path = ($path == '') ? APPPATH.'cache/' : $path;
+
+	    $uri =  $CI->config->item('base_url').
+	            $CI->config->item('index_page').
+	            $uri_string;
+
+	    $cache_path .= md5($uri);
+
+	    return unlink($cache_path);
+	}
+
+	/**
+	 * Clears all cache from the cache directory
+	 * @see http://stackoverflow.com/questions/7422013/how-is-clear-page-cache-in-the-codeigniter
+	 */
+	public function clear_all_cache() {
+	    $CI =& get_instance();
+		$path = $CI->config->item('cache_path');
+
+	    $cache_path = ($path == '') ? APPPATH.'cache/' : $path;
+
+	    $handle = opendir($cache_path);
+	    while (($file = readdir($handle))!== FALSE) 
+	    {
+	        //Leave the directory protection alone
+	        if ($file != '.htaccess' && $file != 'index.html')
+	        {
+	           @unlink($cache_path.'/'.$file);
+	        }
+	    }
+	    closedir($handle);
 	}
 }
