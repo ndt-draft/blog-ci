@@ -45,6 +45,8 @@ class Blog extends CI_Controller {
 
 		// when delete post, must clear
 		$this->output->cache(1);
+
+		$this->output->enable_profiler(true);
 	}
 
 	/*public function search($query = '') {
@@ -100,6 +102,7 @@ class Blog extends CI_Controller {
 			$this->load->view('blog/footer');
 		}
 
+		$this->output->enable_profiler(true);
 	}
 
 	public function create() {
@@ -127,6 +130,8 @@ class Blog extends CI_Controller {
 			$this->clear_all_cache();
 			redirect('/blog', 'refresh');
 		}
+
+		$this->output->enable_profiler(true);
 	}
 
 	public function update($slug = '') {
@@ -184,6 +189,8 @@ class Blog extends CI_Controller {
 		$this->load->view('blog/header');
 		$this->load->view('blog/update', $data);
 		$this->load->view('blog/footer');
+
+		$this->output->enable_profiler(true);
 	}
 
 	public function delete($slug = '') {
@@ -200,6 +207,8 @@ class Blog extends CI_Controller {
 		$this->load->view('blog/header');
 		$this->load->view('blog/delete');
 		$this->load->view('blog/footer');
+
+		$this->output->enable_profiler(true);
 	}
 
 	public function show($slug = '') {
@@ -213,6 +222,8 @@ class Blog extends CI_Controller {
 
 		// when delete post, must clear
 		$this->output->cache(1);
+
+		$this->output->enable_profiler(true);
 	}
 
 	/**
