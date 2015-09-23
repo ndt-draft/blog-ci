@@ -6,12 +6,17 @@ View: `application/views/blog/*.php`
 
 Posts table migration: `application/migrations/001_add_posts.php`
 
-Add .htaccess on root:  
+Add .htaccess on public/:  
+```
+<IfModule mod_rewrite.c>
 
-	RewriteEngine on  
-	RewriteBase /ci2  
-	RewriteCond $1 !^(index.php|resources|robots.txt)  
-	RewriteCond %{REQUEST_FILENAME} !-f  
-	RewriteCond %{REQUEST_FILENAME} !-d  
-	RewriteRule ^(.*)$ index.php/$1 [L,QSA]  
+    Options +FollowSymLinks
+    RewriteEngine on
 
+    # Send request via index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+
+</IfModule>
+```
