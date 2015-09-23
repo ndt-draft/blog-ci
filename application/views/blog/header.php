@@ -4,6 +4,9 @@
 	<title>Blog CRUD App</title>
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+	<script id="helper-js">
+		var site_url = "<?php echo site_url(); ?>";
+	</script>
 </head>
 <body>
 	<div class="site">

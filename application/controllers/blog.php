@@ -74,35 +74,53 @@ class Blog extends CI_Controller {
 	public function search() {
 		$this->load->helper(array('form', 'url'));
 
+		$data['teaser'] = true;
 		$data['is_search'] = true;
 
-		$keyword = urldecode(trim($this->input->get('search')));
+		/** Get the keyword **************************************************/
+		// ajax
+		if ($this->input->post('ajax')) {
+			$keyword = urldecode(trim($this->input->post('keyword')));
 
-		if (empty($keyword)) {
-			$this->load->view('blog/header', $data);
-			$this->load->view('blog/form-search');
-			$this->load->view('blog/footer');
+		// normal reload
 		} else {
+			$keyword = urldecode(trim($this->input->get('search')));
 
-			// set cached key
-			$cached_key = url_title($keyword, '_', true);
-			
-			// load driver
-			$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
-
-			// start caching here
-			if ( ! $data['posts'] = $this->cache->get('search_' . $cached_key) ) {
-				$data['posts'] = $this->posts_model->search_posts($keyword);
-				$this->cache->save('search_' . $cached_key, $data['posts'], 60);
+			if (empty($keyword)) {
+				$this->load->view('blog/header', $data);
+				$this->load->view('blog/form-search');
+				$this->load->view('blog/footer');
+				return;
 			}
-
-			$data['teaser'] = true;
-			$this->load->view('blog/header', $data);
-			$this->load->view('blog/index', $data);
-			$this->load->view('blog/footer');
 		}
 
-		$this->output->enable_profiler(true);
+		/** Get search result ************************************************/
+		// set cached key
+		$cached_key = url_title($keyword, '_', true);
+		
+		// load driver
+		$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+		// start caching here
+		if ( ! $data['posts'] = $this->cache->get('search_' . $cached_key) ) {
+			$data['posts'] = $this->posts_model->search_posts($keyword);
+			$this->cache->save('search_' . $cached_key, $data['posts'], 60);
+		}
+
+		/** Handle the view **************************************************/
+		// ajax
+		if ( $this->input->post('ajax') ) {
+			$this->load->view('blog/index', $data);
+		
+		// normal
+		} else {
+			$this->load->view('blog/header', $data);
+			// $this->load->view('blog/form-search'); // must fix when go to search_url?search=?
+			$this->load->view('blog/index', $data);
+			$this->load->view('blog/footer');
+
+			$this->output->enable_profiler(true);
+		}
 	}
 
 	public function create() {
