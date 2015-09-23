@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Blog CRUD App</title>
-	<link rel="stylesheet" href="<?php echo base_url('public/assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?php echo base_url('public/assets/css/style.css'); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
 	<div class="site">
