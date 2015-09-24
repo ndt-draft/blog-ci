@@ -12,5 +12,8 @@ class Hello extends CI_Controller {
         // $this->load->controller('module/controller/method', $params = array(), $return = FALSE);
 
     	echo 'hello from main controllers';
+
+    	$this->load->spark('example-spark/1.0.0');      # We always specify the full path from the spark folder
+		$this->example_spark->printHello();             # echo's "Hello from the example spark!"
     }
 }
