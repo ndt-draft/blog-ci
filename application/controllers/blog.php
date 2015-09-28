@@ -40,7 +40,11 @@ class Blog extends CI_Controller {
 		$data['teaser'] = true;
 
 		$this->load->view('blog/header', $data);
-		$this->load->view('blog/index', $data);
+		if ($data['posts']) {
+			$this->load->view('blog/index', $data);
+		} else {
+			$this->load->view('blog/content-none');
+		}
 		$this->load->view('blog/footer');
 
 		// when delete post, must clear
@@ -110,13 +114,21 @@ class Blog extends CI_Controller {
 		/** Handle the view **************************************************/
 		// ajax
 		if ( $this->input->post('ajax') ) {
-			$this->load->view('blog/index', $data);
+			if ($data['posts']) {
+				$this->load->view('blog/index', $data);
+			} else {
+				$this->load->view('blog/content-none');
+			}
 		
 		// normal
 		} else {
 			$this->load->view('blog/header', $data);
 			// $this->load->view('blog/form-search'); // must fix when go to search_url?search=?
-			$this->load->view('blog/index', $data);
+			if ($data['posts']) {
+				$this->load->view('blog/index', $data);
+			} else {
+				$this->load->view('blog/content-none');
+			}
 			$this->load->view('blog/footer');
 
 			$this->output->enable_profiler(true);
@@ -162,11 +174,12 @@ class Blog extends CI_Controller {
 
 		// default
 		$data = $this->posts_model->get_posts($slug);
-		$data['data'] = $data[0];
+		$data['data'] = isset($data[0]) ? $data[0] : '';
 
 		// no rows affected
-		if (empty($data[0])) {
+		if (!$data['data']) {
 			redirect('/blog', 'refresh');
+			exit();
 		}
 
 		// get original slug
@@ -234,8 +247,13 @@ class Blog extends CI_Controller {
 
 		$data['posts'] = $this->posts_model->get_posts($slug);
 		$data['teaser'] = false;
+
 		$this->load->view('blog/header');
-		$this->load->view('blog/index', $data);
+		if ($data['posts']) {
+			$this->load->view('blog/index', $data);
+		} else {
+			$this->load->view('blog/content-none');
+		}
 		$this->load->view('blog/footer');
 
 		// when delete post, must clear
