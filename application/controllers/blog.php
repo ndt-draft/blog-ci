@@ -9,29 +9,11 @@ class Blog extends CI_Controller {
     public function index() {
         $this->load->helper(array('url'));
         $this->load->library('pagination');
+        $this->config->load('config_pagination'); // doesn't work $this->config->load('config_pagination', true)
 
-        $config = array(
-            'base_url' => site_url() . '/blog/index',
-            'total_rows' => $this->posts_model->record_count(),
-            'per_page' => 3,
-            'full_tag_open' => '<ul class="pagination">',
-            'full_tag_close' => '</ul>',
-            'cur_tag_open' => '<li class="active"><span>',
-            'cur_tag_close' => '</span></li>'
-        );
+        $config = $this->config->item('pagination');
+        $config['total_rows'] = $this->posts_model->record_count();
 
-        $config['num_tag_open'] =
-            $config['first_tag_open'] = 
-            $config['next_tag_open'] = 
-            $config['prev_tag_open'] = 
-            $config['last_tag_open'] = '<li>';
-
-        $config['first_tag_close'] =
-            $config['num_tag_close'] = 
-            $config['next_tag_close'] = 
-            $config['prev_tag_close'] = 
-            $config['last_tag_close'] = '</li>';
-        
         $this->pagination->initialize($config);
 
         $data['links'] = $this->pagination->create_links();
@@ -48,9 +30,10 @@ class Blog extends CI_Controller {
         $this->load->view('blog/footer');
 
         // when delete post, must clear
-        $this->output->cache(1);
-
-        $this->output->enable_profiler(true);
+        if ('development' == ENVIRONMENT) {
+            $this->output->cache(1);
+            $this->output->enable_profiler(true);
+        }
     }
 
     /*public function search($query = '') {
