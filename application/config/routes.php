@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "blog";
 $route['404_override'] = '';
 $route['hi/(:any)'] = 'tools/message/$1';
 // $route['news'] = 'blog';

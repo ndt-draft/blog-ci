@@ -40,14 +40,26 @@
                         <li><a href="#">Sign up</a></li>
                         <li><a href="#">Sign in</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">John Doe <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="">Signed in as <strong>john-doe</strong></a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">Your Profile</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Settings</a></li>
-                                <li><a href="#">Change Password</a></li>
+                                <li><a href="#">Sign out</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="">Signed in as <strong class="text-danger">admin</strong></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="<?php echo base_url('me'); ?>">Your Profile</a></li>
+                                <li><a href="<?php echo base_url('users'); ?>">Users</a></li>
+                                <li><a href="<?php echo base_url('menus'); ?>">Menus</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="<?php echo base_url('settings'); ?>">Settings</a></li>
+                                <li><a href="<?php echo base_url('signout'); ?>">Sign out</a></li>
                             </ul>
                         </li>
                     </ul>
