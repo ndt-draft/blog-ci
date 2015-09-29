@@ -9,7 +9,7 @@ class Blog extends CI_Controller {
 	public function index() {
 		$this->load->helper(array('url'));
 		$this->load->library('pagination');
-		
+
 		$config = array(
 			'base_url' => site_url() . '/blog/index',
 			'total_rows' => $this->posts_model->record_count(),
@@ -101,7 +101,7 @@ class Blog extends CI_Controller {
 		/** Get search result ************************************************/
 		// set cached key
 		$cached_key = url_title($keyword, '_', true);
-		
+
 		// load driver
 		$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
 
@@ -119,7 +119,7 @@ class Blog extends CI_Controller {
 			} else {
 				$this->load->view('blog/content-none');
 			}
-		
+
 		// normal
 		} else {
 			$this->load->view('blog/header', $data);
@@ -200,7 +200,7 @@ class Blog extends CI_Controller {
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('content', 'Content', 'trim|required');
 			$this->form_validation->set_rules('slug', 'Slug', 'trim|required|alpha_dash'.$is_unique);
-			
+
 			// fail
 			if ( $this->form_validation->run() === false ) {
 				$data['data'] = array(
@@ -266,19 +266,19 @@ class Blog extends CI_Controller {
 	 * @see http://stackoverflow.com/questions/7422013/how-is-clear-page-cache-in-the-codeigniter
 	 */
 	function delete_cache($uri_string=null) {
-	    $CI =& get_instance();
-	    $path = $CI->config->item('cache_path');
-	    $path = rtrim($path, DIRECTORY_SEPARATOR);
+		$CI =& get_instance();
+		$path = $CI->config->item('cache_path');
+		$path = rtrim($path, DIRECTORY_SEPARATOR);
 
-	    $cache_path = ($path == '') ? APPPATH.'cache/' : $path;
+		$cache_path = ($path == '') ? APPPATH.'cache/' : $path;
 
-	    $uri =  $CI->config->item('base_url').
-	            $CI->config->item('index_page').
-	            $uri_string;
+		$uri =  $CI->config->item('base_url').
+				$CI->config->item('index_page').
+				$uri_string;
 
-	    $cache_path .= md5($uri);
+		$cache_path .= md5($uri);
 
-	    return unlink($cache_path);
+		return unlink($cache_path);
 	}
 
 	/**
@@ -286,20 +286,20 @@ class Blog extends CI_Controller {
 	 * @see http://stackoverflow.com/questions/7422013/how-is-clear-page-cache-in-the-codeigniter
 	 */
 	public function clear_all_cache() {
-	    $CI =& get_instance();
+		$CI =& get_instance();
 		$path = $CI->config->item('cache_path');
 
-	    $cache_path = ($path == '') ? APPPATH.'cache/' : $path;
+		$cache_path = ($path == '') ? APPPATH.'cache/' : $path;
 
-	    $handle = opendir($cache_path);
-	    while (($file = readdir($handle))!== FALSE) 
-	    {
-	        //Leave the directory protection alone
-	        if ($file != '.htaccess' && $file != 'index.html')
-	        {
-	           @unlink($cache_path.'/'.$file);
-	        }
-	    }
-	    closedir($handle);
+		$handle = opendir($cache_path);
+		while (($file = readdir($handle))!== FALSE) 
+		{
+			//Leave the directory protection alone
+			if ($file != '.htaccess' && $file != 'index.html')
+			{
+				@unlink($cache_path.'/'.$file);
+			}
+		}
+		closedir($handle);
 	}
 }
