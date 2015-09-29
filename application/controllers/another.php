@@ -14,6 +14,6 @@ class Another extends CI_Controller {
 
 		$result = $this->another_model->get_posts();
 		echo 'from blog database';
-		print_r($result); 
+		print_r($result);
 	}
 }
