@@ -1,26 +1,66 @@
 .site {
-	width: 50%;
-	margin: 2em auto;
+    width: 50%;
+    margin: 2em auto;
 }
 
 .navigation,
 #form-search,
 .entry-content {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 .post {
-	padding-bottom: 1em;
-	border-bottom: 1px solid #ddd;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd;
 }
 
 .post:last-child {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 
 /* Menus */
 .menu-name {
     width: 270px;
+}
+
+.menu .menu-item {
+    margin-top: 9px;
+    margin-bottom: 0;
+}
+
+.menu-body {
+    display: none;
+    padding-top: 10px;
+}
+
+/* sub menu */
+.menu-item-depth-1 {
+    margin-left: 30px;
+}
+
+.menu-item-depth-2 {
+    margin-left: 60px;
+}
+
+.menu-item-depth-3 {
+    margin-left: 90px;
+}
+
+/* edit menu item */
+.menu-item-edit-active .menu-body {
+    display: block;
+}
+
+.menu-item-edit-active .menu-header {
+    padding-bottom: 10px;
+}
+
+.menu-item-edit-active {
+    background-color: #fafafa;
+}
+
+.item-edit {
+    color: #a0a5aa;
 }
 

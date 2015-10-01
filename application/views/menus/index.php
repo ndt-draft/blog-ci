@@ -1,7 +1,7 @@
 <h1 class="page-title menu-title">Menus</h1>
 
 <div class="alert alert-info">
-    <form class="form-inline" action="" method="post">
+    <form class="form-inline form-menu-select" action="" method="post">
         <div class="form-group">
             <label for="select-menu-to-edit">Select a menu to edit:</label>
             <select name="menu" id="select-menu-to-edit" class="form-control">
@@ -11,7 +11,7 @@
             </select>
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Select</button>
+            <button name="add-menu-item" class="btn btn-primary" type="submit" value="1">Select</button>
         </div>
         <div class="form-group">
             <span class="add-new-menu-action">
@@ -23,35 +23,70 @@
 
 <div class="row">
     <div class="menu-selection col-md-3">
-        <form action="">
+        <form class="form-menu-item" action="">
+            <h3>Add New Item</h3>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter title">
+                <label for="">URL</label>
+                <input type="text" class="form-control">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter url">
+                <label for="">Link text</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">Parent item</label>
+                <select name="" id="" class="form-control">
+                    <option value="">Home</option>
+                    <option value="">About</option>
+                </select>
             </div>
             <div class="form-group clearfix">
-                <button type="submit" class="btn btn-default pull-right">Add</button>
+                <button name="select-menu" type="submit" value="1" class="btn btn-default pull-right">Add</button>
             </div>
         </form>
     </div> <!-- .menu-selection -->
 
     <div class="menu-edit col-md-9">
-        <form action="">
+        <form class="form-menu" action="">
             <div class="form-group">
                 <div class="alert alert-info clearfix">
-                    <input type="text" class="form-control menu-name pull-left" value="Menu Name" placeholder="Enter menu name here">
-                    <input type="submit" name="save_menu" class="btn btn-primary pull-right" value="Save Menu">
+                    <input type="text" name="menu-name" class="form-control menu-name pull-left" value="<?php echo $menu_name; ?>" placeholder="Enter menu name here">
+                    <input type="submit" name="save-menu" class="btn btn-primary pull-right" value="Save Menu">
                 </div>
             </div>
             <div class="menu-properties">
                 <div class="menu-items">
                     <h3>Menu Structure</h3>
 
-                    <div class="alert alert-info">Home</div>
-                    <div class="alert alert-info">Create</div>
-                    <div class="alert alert-info">Search</div>
-                    <div class="alert alert-info">About</div>
+                    <ul class="menu list-group">
+                        <?php foreach ($menu_items as $menu_item) : ?>
+                            <li id="menu-item-<?php echo $menu_item['menu_id']; ?>" class="menu-item list-group-item menu-item-depth-<?php echo $menu_item['depth']; ?> <?php echo $edit_menu_item == $menu_item['menu_id'] ? 'menu-item-edit-active' : ''; ?>">
+                                <div class="menu-header">
+                                    <?php echo $menu_item['menu_title']; ?> <div class="pull-right"><a class="item-edit" href="?edit-menu-item=<?php echo $menu_item['menu_id']; ?>#menu-item-<?php echo $menu_item['menu_id']; ?>"><i class="glyphicon glyphicon-triangle-bottom"></i></a></div>
+                                </div> <!-- .menu-header -->
+                                <div class="menu-body">
+                                    <div class="form-group">
+                                        <label for="">URL</label>
+                                        <input type="text" class="form-control" value="<?php echo $menu_item['menu_url']; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Link text</label>
+                                        <input type="text" class="form-control" value="<?php echo $menu_item['menu_title']; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Parent item</label>
+                                        <select name="" id="" class="form-control">
+                                            <option value="">Home</option>
+                                            <option value="">About</option>
+                                        </select>
+                                    </div>
+                                    <div class="menu-item-actions clearfix">
+                                        <a href="" class="item-delete text-danger">Remove</a>
+                                    </div>
+                                </div> <!-- .menu-body -->
+                            </li> <!-- .menu-item -->
+                        <?php endforeach; ?>
+                    </ul> <!-- .menu -->
                 </div>
                 <hr>
                 <div class="form-group">
@@ -65,12 +100,11 @@
             </div>
             <div class="form-group">
                 <div class="alert alert-info clearfix">
-                    <input type="submit" class="btn btn-danger" value="Delete Menu">
-                    <input type="submit" name="save_menu" class="btn btn-primary pull-right" value="Save Menu">
+                    <input type="submit" name="delete-menu" class="btn btn-danger" value="Delete Menu">
+                    <input type="submit" name="save-menu" class="btn btn-primary pull-right" value="Save Menu">
                 </div>
             </div>
         </form>
-        
     </div>
     <!-- /.menu-edit -->
 </div>
