@@ -1,12 +1,11 @@
 <?php
 
 class Menus extends CI_Controller {
-    public function index($id = '') {
-        if ($id) {
-            echo 'if id available, show it to edit or use edit/ to edit';
-        } else {
-            echo 'open latest menu';
-        }
+    public function index() {
+        $this->load->helper(array('url'));
+        $this->load->view('blog/header');
+        $this->load->view('menus/index');
+        $this->load->view('blog/footer');
     }
 
     public function edit($id = '') {

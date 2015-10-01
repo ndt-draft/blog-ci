@@ -17,3 +17,10 @@
 .post:last-child {
 	border-bottom: none;
 }
+
+
+/* Menus */
+.menu-name {
+    width: 270px;
+}
+
