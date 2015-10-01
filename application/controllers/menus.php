@@ -25,15 +25,41 @@ class Menus extends CI_Controller {
 
         // need menu items helper
 
-        // sort for menu order
-        for ($i = 0; $i < count($menu_items) - 1; $i++) {
-            for ($j = $i + 1; $j < count($menu_items); $j++) {
-                if ($menu_items[ $i ]['menu_order'] > $menu_items[ $j ]['menu_order']) {
-                    $temp_item = $menu_items[ $i ];
-                    $menu_items[ $i ] = $menu_items[ $j ];
-                    $menu_items[ $j ] = $temp_item;
+        // sort by item weight
+        // for ($i = 0; $i < count($menu_items) - 1; $i++) {
+        //     for ($j = $i + 1; $j < count($menu_items); $j++) {
+        //         if ($menu_items[ $i ]['menu_weight'] > $menu_items[ $j ]['menu_weight']) {
+        //             $temp_item = $menu_items[ $i ];
+        //             $menu_items[ $i ] = $menu_items[ $j ];
+        //             $menu_items[ $j ] = $temp_item;
+        //         }
+        //     }
+        // }
+
+        $temp_items = $menu_items; // store data before reset
+        $menu_items = array();     // reset
+
+        // get all items without children
+        for ($i = 0; $i < count($temp_items); $i++) {
+            if (0 == $temp_items[ $i ]['menu_parent']) {
+                $menu_items[] = $temp_items[ $i ];
+            }
+            // sort menu_items by weight here
+        }
+
+        print_r($temp_items);
+
+        for ($i = 0; $i < count($menu_items); $i++) {
+            $parent_id = $menu_items[$i]['menu_id'];
+
+            $children_items = array();
+            for ($j = 0; $j < count($temp_items); $j++) {
+                if ($parent_id == $temp_items[ $j ]['menu_parent']) {
+                    $children_items[] = $temp_items[ $j ];
                 }
             }
+
+            // sort children_items here
         }
 
         // determine depth

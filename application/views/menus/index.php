@@ -36,8 +36,16 @@
             <div class="form-group">
                 <label for="">Parent item</label>
                 <select name="" id="" class="form-control">
+                    <option value="">&ndash;Menu 1&ndash;</option>
                     <option value="">Home</option>
                     <option value="">About</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Weight</label> <span class="menu-help glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Menu links with smaller weights are displayed before links with larger weights."></span>
+                <select name="" id="" class="form-control">
+                    <option value="">1</option>
+                    <option value="">2</option>
                 </select>
             </div>
             <div class="form-group clearfix">
@@ -76,8 +84,16 @@
                                     <div class="form-group">
                                         <label for="">Parent item</label>
                                         <select name="" id="" class="form-control">
+                                            <option value="">&ndash;Menu 1&ndash;</option>
                                             <option value="">Home</option>
                                             <option value="">About</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Weight</label> <span class="menu-help glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Menu links with smaller weights are displayed before links with larger weights."></span>
+                                        <select name="" id="" class="form-control">
+                                            <option value="">1</option>
+                                            <option value="">2</option>
                                         </select>
                                     </div>
                                     <div class="menu-item-actions clearfix">
