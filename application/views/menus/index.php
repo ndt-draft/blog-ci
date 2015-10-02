@@ -34,18 +34,17 @@
             </div>
             <div class="form-group">
                 <label for="">Parent item</label>
-                <select id="" class="form-control" name="menu-item[menu-item-parent]">
-                    <option value="">&ndash;Menu 1&ndash;</option>
-                    <option value="1">Home</option>
-                    <option value="2">About</option>
-                </select>
+                <?php
+                $attr = 'class="form-control"';
+                echo form_dropdown('menu-item[menu-item-parent]', $menu_parent_options, 0, $attr);
+                ?>
             </div>
             <div class="form-group">
                 <label for="">Weight</label> <span class="menu-help glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Menu links with smaller weights are displayed before links with larger weights."></span>
-                <select id="" class="form-control" name="menu-item[menu-item-weight]">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+                <?php
+                $attr = 'class="form-control"';
+                echo form_dropdown('menu-item[menu-item-weight]', $menu_weight_options, 0, $attr);
+                ?>
             </div>
             <div class="form-group clearfix">
                 <button name="add-new-menu-item" type="submit" value="1" class="btn btn-default pull-right add-new-menu-item">Add</button>
@@ -83,18 +82,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Parent item</label>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">&ndash;Menu 1&ndash;</option>
-                                            <option value="">Home</option>
-                                            <option value="">About</option>
-                                        </select>
+                                        <?php
+                                        $attr = 'class="form-control"';
+                                        echo form_dropdown('menu-item[menu-item-parent]', $menu_parent_options, $menu_item['menu_parent'], $attr);
+                                        ?>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Weight</label> <span class="menu-help glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Menu links with smaller weights are displayed before links with larger weights."></span>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                        </select>
+                                        <?php
+                                        $attr = 'class="form-control"';
+                                        echo form_dropdown('menu-item[menu-item-weight]', $menu_weight_options, $menu_item['menu_weight'], $attr);
+                                        ?>
                                     </div>
                                     <div class="menu-item-actions clearfix">
                                         <a href="" class="item-delete text-danger">Remove</a>

@@ -25,6 +25,10 @@ class Menus extends CI_Controller {
         $menu_name  = '';
         $menu_slug  = '';
         $menu_items = array();
+        $menu_options = array();
+        $menu_parent_options = array();
+        $menu_weight_options = range(-50, 50);
+        $menu_weight_options = array_combine($menu_weight_options, $menu_weight_options);
 
         if ('index' == $context) {
             $menu = $this->menus_model->get_latest_menu();
@@ -57,16 +61,29 @@ class Menus extends CI_Controller {
         }
 
         // prepare data for view
-        $menu_options = array();
         $menu_details = $this->menus_model->get_menus();
 
         foreach ($menu_details as $menu_detail) {
             $menu_options[ $menu_detail['slug'] ] = $menu_detail['name'];
         }
 
+        // dynamic parents
+        $menu_parent_options[0] = '&lt;'.$menu_name.'&gt;';
+        foreach ($menu_items as $item) {
+            $prefix = '--';
+            if ($item['depth']) {
+                for ($i = 0; $i < $item['depth']; $i++) {
+                    $prefix .= '--';
+                }
+            }
+            $menu_parent_options[ $item['menu_id'] ] = $prefix . $item['menu_title'];
+        }
+
         $data['menu_name']  = $menu_name;
         $data['menu_slug']  = $menu_slug;
         $data['menu_options'] = $menu_options;
+        $data['menu_parent_options'] = $menu_parent_options;
+        $data['menu_weight_options'] = $menu_weight_options;
         $data['menu_items'] = $menu_items;
         $data['edit_menu_item'] = $this->input->get('edit-menu-item');
 
