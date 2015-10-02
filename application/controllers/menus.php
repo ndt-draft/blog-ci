@@ -6,28 +6,67 @@ class Menus extends CI_Controller {
         $this->load->model('menus_model');
     }
 
-    public function index() {
-        $this->load->helper(array('url'));
-        $this->load->helper('menus');
+    /**
+     * Handle add new menu item
+     */
+    private function add_new_menu_item($menu_id) {
+        if ($this->input->post('add-new-menu-item')) {
+            $menu_item = $this->input->post('menu-item');
 
-        $menu_id = 0;
-        $menu_name = '';
-        $latest = $this->menus_model->get_latest();
-        if (isset($latest[0]['term_id'])) {
-            $menu_id = $latest[0]['term_id'];
+            print_r($menu_item);
         }
-        if (isset($latest[0]['name'])) {
-            $menu_name = $latest[0]['name'];
+    }
+
+    /**
+     * Menu edit
+     */
+    private function edit_menu($context) {
+        $menu_id    = 0;
+        $menu_name  = '';
+        $menu_slug  = '';
+        $menu_items = array();
+
+        if ('index' == $context) {
+            $menu = $this->menus_model->get_latest_menu();
+        } else {
+            $menu = $this->menus_model->get_menu($context);
         }
 
+        // get menu properties
+        if (isset($menu[0]['term_id'])) {
+            $menu_id = $menu[0]['term_id'];
+        }
+        if (isset($menu[0]['name'])) {
+            $menu_name = $menu[0]['name'];
+        }
+        if (isset($menu[0]['slug'])) {
+            $menu_slug = $menu[0]['slug'];
+        }
+
+        // handle add new menu item here
+        $this->add_new_menu_item($menu_id);
+
+        // finally, print to edit
         if ($menu_id) {
             $menu_items = $this->menus_model->get_menu_items($menu_id);
         }
 
-        $menu_items = menus_sort_level_weight($menu_items);
-        $menu_items = menus_items_depth($menu_items);
+        if ($menu_items) {
+            $menu_items = menus_sort_level_weight($menu_items);
+            $menu_items = menus_items_depth($menu_items);
+        }
 
-        $data['menu_name'] = $menu_name;
+        // prepare data for view
+        $menu_options = array();
+        $menu_details = $this->menus_model->get_menus();
+
+        foreach ($menu_details as $menu_detail) {
+            $menu_options[ $menu_detail['slug'] ] = $menu_detail['name'];
+        }
+
+        $data['menu_name']  = $menu_name;
+        $data['menu_slug']  = $menu_slug;
+        $data['menu_options'] = $menu_options;
         $data['menu_items'] = $menu_items;
         $data['edit_menu_item'] = $this->input->get('edit-menu-item');
 
@@ -36,14 +75,54 @@ class Menus extends CI_Controller {
         $this->load->view('blog/footer');
     }
 
-    public function edit($id = '') {
-        echo 'ajax goes here or reload to edit';
+    /**
+     * Redirect to menu edit page
+     */
+    public function switch_menu() {
+        $this->load->helper('url');
+        $slug = $this->input->post('menu');
+        if ($slug) {
+            redirect('menus/edit/' . $slug);
+        }
+
+        redirect('menus');
     }
 
-    public function delete($id = '') {
-        echo 'delete ' . $id;
+
+    /**
+     * Main edit page for menus
+     */
+    public function index() {
+        $this->load->helper(array('url', 'form'));
+        $this->load->helper('menus');
+
+        $this->edit_menu('index');
     }
 
+    /**
+     * Handle all edit actions
+     */
+    public function edit($slug = '') {
+        $this->load->helper(array('url', 'form'));
+        $this->load->helper('menus');
+
+        $id = $this->menus_model->get_id_by_slug($slug);
+
+        $this->edit_menu($id);
+    }
+
+    /**
+     * Create new menu
+     */
     public function create() {
+        echo 'create new menu';
+        echo 'must validate slug';
+    }
+
+    /**
+     * Delete menu
+     */
+    public function delete($slug = '') {
+        echo 'delete ' . $slug;
     }
 }

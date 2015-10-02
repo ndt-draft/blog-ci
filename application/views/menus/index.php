@@ -1,21 +1,20 @@
 <h1 class="page-title menu-title">Menus</h1>
 
 <div class="alert alert-info">
-    <form class="form-inline form-menu-select" action="" method="post">
+    <form class="form-inline form-menu-select" action="<?php echo base_url('menus/switch_menu'); ?>" method="post">
         <div class="form-group">
             <label for="select-menu-to-edit">Select a menu to edit:</label>
-            <select name="menu" id="select-menu-to-edit" class="form-control">
-                <option value="1">Menu 1</option>
-                <option value="2">Menu 2</option>
-                <option value="3">Menu 3</option>
-            </select>
+            <?php
+            $attr = 'id="select-menu-to-edit" class="form-control"';
+            echo form_dropdown('menu', $menu_options, $menu_slug, $attr);
+            ?>
         </div>
         <div class="form-group">
             <button name="add-menu-item" class="btn btn-primary" type="submit" value="1">Select</button>
         </div>
         <div class="form-group">
             <span class="add-new-menu-action">
-                or <a href="">create a new menu</a>
+                or <a href="<?php echo base_url('menus/create'); ?>">create a new menu</a>
             </span>
         </div>
     </form>
@@ -23,39 +22,39 @@
 
 <div class="row">
     <div class="menu-selection col-md-3">
-        <form class="form-menu-item" action="">
+        <form class="form-menu-item" action="#" method="post">
             <h3>Add New Item</h3>
             <div class="form-group">
                 <label for="">URL</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="menu-item[menu-item-url]">
             </div>
             <div class="form-group">
                 <label for="">Link text</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="menu-item[menu-item-title]">
             </div>
             <div class="form-group">
                 <label for="">Parent item</label>
-                <select name="" id="" class="form-control">
+                <select id="" class="form-control" name="menu-item[menu-item-parent]">
                     <option value="">&ndash;Menu 1&ndash;</option>
-                    <option value="">Home</option>
-                    <option value="">About</option>
+                    <option value="1">Home</option>
+                    <option value="2">About</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Weight</label> <span class="menu-help glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Menu links with smaller weights are displayed before links with larger weights."></span>
-                <select name="" id="" class="form-control">
-                    <option value="">1</option>
-                    <option value="">2</option>
+                <select id="" class="form-control" name="menu-item[menu-item-weight]">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                 </select>
             </div>
             <div class="form-group clearfix">
-                <button name="select-menu" type="submit" value="1" class="btn btn-default pull-right">Add</button>
+                <button name="add-new-menu-item" type="submit" value="1" class="btn btn-default pull-right add-new-menu-item">Add</button>
             </div>
         </form>
     </div> <!-- .menu-selection -->
 
     <div class="menu-edit col-md-9">
-        <form class="form-menu" action="">
+        <form class="form-menu" action="#" method="post">
             <div class="form-group">
                 <div class="alert alert-info clearfix">
                     <input type="text" name="menu-name" class="form-control menu-name pull-left" value="<?php echo $menu_name; ?>" placeholder="Enter menu name here">
@@ -65,6 +64,7 @@
             <div class="menu-properties">
                 <div class="menu-items">
                     <h3>Menu Structure</h3>
+                    <p>Add menu items from the column on the left.</p>
 
                     <ul class="menu list-group">
                         <?php foreach ($menu_items as $menu_item) : ?>
