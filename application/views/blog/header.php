@@ -44,7 +44,15 @@
                             <ul class="dropdown-menu">
                                 <li><a href="">Signed in as <strong>john-doe</strong></a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Your Profile</a></li>
+                                <li class="dropdown"><a href="#">Your Profile</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="">Signed in as <strong>john-doe</strong></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Your Profile</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Sign out</a></li>
+                                    </ul>
+                                </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">Sign out</a></li>
                             </ul>

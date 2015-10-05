@@ -111,3 +111,62 @@ function menus_items_depth($items) {
 
     return $items;
 }
+
+function menus_parent_options($menu_items, $first_option = '') {
+    $menu_parent_options[0] = $first_option;
+
+    foreach ($menu_items as $item) {
+        $prefix = '--';
+        if ($item['depth']) {
+            for ($i = 0; $i < $item['depth']; $i++) {
+                $prefix .= '--';
+            }
+        }
+        $menu_parent_options[ $item['menu_id'] ] = $prefix . ' ' . $item['menu_title'];
+    }
+
+    return $menu_parent_options;
+}
+
+function menus_item_parent_options($item_id, $menu_items, $first_options = '') {
+    $parent_options = menus_parent_options($menu_items, $first_options);
+    $excluded = array();
+
+    foreach ($menu_items as $index => $item) {
+        if ($item['menu_id'] == $item_id) {
+            $excluded[] = $item_id;
+            $depth = $item['depth'];
+        } elseif (isset($depth)) {
+            if ($depth >= $item['depth']) {
+                break;
+            } else {
+                $excluded[] = $item['menu_id'];
+            }
+        }
+    }
+
+    foreach ($parent_options as $index => $options) {
+        if (in_array($index, $excluded)) {
+            unset($parent_options[ $index ]);
+        }
+    }
+
+    return $parent_options;
+}
+
+function menus_items_parent_options($menu_items, $first_option) {
+    $parents_options = array();
+
+    foreach ($menu_items as $item) {
+        $menu_id = $item['menu_id'];
+        $parents_options[ $menu_id ] = menus_item_parent_options($menu_id, $menu_items, $first_option);
+    }
+
+    return $parents_options;
+}
+
+function menu_slug($name) {
+    $CI = get_instance();
+    $CI->load->helper('url');
+    return url_title($name, 'dash', true);
+}
