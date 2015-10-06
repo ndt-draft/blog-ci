@@ -78,6 +78,10 @@ class Menus extends CI_Controller {
 
         if ('index' == $context) {
             $menu = $this->menus_model->get_latest_menu();
+
+            if (!$menu) {
+                redirect('menus/create');
+            }
         } else {
             $menu = $this->menus_model->get_menu($context);
         }
