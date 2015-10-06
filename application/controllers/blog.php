@@ -3,6 +3,7 @@
 class Blog extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        $this->load->helper(array('options', 'menus'));
         $this->load->model('posts_model');
     }
 

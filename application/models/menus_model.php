@@ -86,13 +86,15 @@ class Menus_model extends CI_Model {
         }
 
         // save menu items
-        foreach ($data['menu_item_ids'] as $item_id) {
-            $this->db->set('menu_title', $data['menu_item_titles'][ $item_id ]);
-            $this->db->set('menu_url', $data['menu_item_urls'][ $item_id ]);
-            $this->db->set('menu_weight', $data['menu_item_weights'][ $item_id ]);
-            $this->db->set('menu_parent', $data['menu_item_parents'][ $item_id ]);
-            $this->db->where('menu_id', $item_id);
-            $this->db->update('menus');
+        if (isset($data['menu_item_ids']) && $data['menu_item_ids']) {
+            foreach ($data['menu_item_ids'] as $item_id) {
+                $this->db->set('menu_title', $data['menu_item_titles'][ $item_id ]);
+                $this->db->set('menu_url', $data['menu_item_urls'][ $item_id ]);
+                $this->db->set('menu_weight', $data['menu_item_weights'][ $item_id ]);
+                $this->db->set('menu_parent', $data['menu_item_parents'][ $item_id ]);
+                $this->db->where('menu_id', $item_id);
+                $this->db->update('menus');
+            }
         }
     }
 

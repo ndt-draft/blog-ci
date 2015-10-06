@@ -24,18 +24,8 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="<?php echo isset($is_home) ? 'active' : ''; ?>">
-                            <?php echo anchor('blog', 'Home'); ?>
-                        </li>
-                        <li class="<?php echo isset($is_create) ? 'active' : ''; ?>">
-                            <?php echo anchor('blog/create', 'Create'); ?>
-                        </li>
-                        <li class="<?php echo isset($is_search) ? 'active' : ''; ?>">
-                            <?php echo anchor('blog/search', 'Search'); ?>
-                        </li>
-                    </ul>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <?php nav_menu('primary'); ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Sign up</a></li>
                         <li><a href="#">Sign in</a></li>

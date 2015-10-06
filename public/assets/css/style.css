@@ -67,3 +67,13 @@
 .form-menu-select {
     margin-bottom: 0;
 }
+
+/* dropdown menu */
+#main-menu .dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+#main-menu .dropdown-menu .dropdown-menu {
+    left: 100%;
+    top: 0;
+}

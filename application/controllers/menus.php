@@ -118,8 +118,9 @@ class Menus extends CI_Controller {
         }
 
         // dynamic parents
-        $menu_parent_options = menus_parent_options($menu_items, '&lt;'.$menu_name.'&gt;');
-        $menu_parents_options = menus_items_parent_options($menu_items, '&lt;'.$menu_name.'&gt;');
+        $first_parent_option = '&lt;'.$menu_name.'&gt;';
+        $menu_parent_options = menus_parent_options($menu_items, $first_parent_option);
+        $menu_parents_options = menus_items_parent_options($menu_items, $first_parent_option);
 
         // use for primary
         $locations = get_option('menu_locations');
@@ -142,6 +143,11 @@ class Menus extends CI_Controller {
         $this->load->view('blog/header');
         $this->load->view('menus/index', $data);
         $this->load->view('blog/footer');
+
+        // when delete post, must clear
+        if ('development' == ENVIRONMENT) {
+            $this->output->enable_profiler(true);
+        }
     }
 
     /**

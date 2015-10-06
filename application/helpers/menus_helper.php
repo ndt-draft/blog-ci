@@ -112,6 +112,9 @@ function menus_items_depth($items) {
     return $items;
 }
 
+/**
+ * Get all parent options
+ */
 function menus_parent_options($menu_items, $first_option = '') {
     $menu_parent_options[0] = $first_option;
 
@@ -128,6 +131,9 @@ function menus_parent_options($menu_items, $first_option = '') {
     return $menu_parent_options;
 }
 
+/**
+ * Get parent options for one menu item
+ */
 function menus_item_parent_options($item_id, $menu_items, $first_options = '') {
     $parent_options = menus_parent_options($menu_items, $first_options);
     $excluded = array();
@@ -154,6 +160,9 @@ function menus_item_parent_options($item_id, $menu_items, $first_options = '') {
     return $parent_options;
 }
 
+/**
+ * Get parent options for each menu item
+ */
 function menus_items_parent_options($menu_items, $first_option) {
     $parents_options = array();
 
@@ -165,8 +174,107 @@ function menus_items_parent_options($menu_items, $first_option) {
     return $parents_options;
 }
 
+/**
+ * Use for form validation to check slug unique
+ */
 function menu_slug($name) {
     $CI = get_instance();
     $CI->load->helper('url');
     return url_title($name, 'dash', true);
+}
+
+/**
+ * Display menu
+ * @see nav_menu_html
+ */
+function nav_menu($slug) {
+    $CI = get_instance();
+    $CI->load->helper('options');
+    $menu_locations = get_option('menu_locations');
+
+    if (isset($menu_locations[ $slug ]) && $menu_locations[ $slug ]) {
+        $term_id = $menu_locations[ $slug ];
+        nav_menu_html($term_id);
+    }
+}
+
+/**
+ * Print nav menu html
+ */
+function nav_menu_html($term_id) {
+    echo get_nav_menu_html($term_id); 
+}
+
+    /**
+     * Get nav menu html
+     */
+    function get_nav_menu_html($term_id) {
+        $CI = get_instance();
+        $CI->load->model('menus_model');
+
+        $html = '';
+        $menu_items = array();
+
+        if ($term_id) {
+            $menu_items = $CI->menus_model->get_menu_items($term_id);
+        }
+
+        if ($menu_items) {
+            $menu_items = menus_sort_level_weight($menu_items);
+            $menu_items = menus_items_depth($menu_items);
+            $tree = parse_menu_tree($menu_items);
+            $html = get_menu_tree_html($tree);
+        }
+
+        return $html;
+    }
+
+/**
+ * @see http://stackoverflow.com/a/2915920
+ */
+function parse_menu_tree($tree, $root = 0) {
+    $return = array();
+    # Traverse the tree and search for direct children of the root
+    foreach($tree as $index => $item) {
+        # A direct child is found
+        if($item['menu_parent'] == $root) {
+            # Remove item from tree (we don't need to traverse this again)
+            unset($tree[ $index ]);
+            # Append the child into result array and parse its children
+            $item['children'] = parse_menu_tree($tree, $item['menu_id']);
+            $return[] = $item;
+        }
+    }
+    return empty($return) ? null : $return;    
+}
+
+/**
+ * Get menu tree html
+ */
+function get_menu_tree_html($tree, $level = 0) {
+    $html = '';
+    if(!is_null($tree) && count($tree) > 0) {
+        if (0 == $level) {
+            $html .= '<ul id="main-menu" class="nav navbar-nav">';
+        } else {
+            $html .= '<ul class="dropdown-menu">';
+        }
+        foreach($tree as $node) {
+            if (isset($node['children'])) {
+                $html .= '<li class="dropdown">';
+                $html .= '<a href="'.$node['menu_url'].'">'.$node['menu_title'];
+                if (0 == $level) {
+                    $html .= ' <span class="caret"></span>';
+                }
+                $html .= '</a>';
+            } else {
+                $html .= '<li>';
+                $html .= '<a href="'.$node['menu_url'].'">'.$node['menu_title'].'</a>';
+            }
+            $html .= get_menu_tree_html($node['children'], $level + 1);
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+    }
+    return $html;
 }
