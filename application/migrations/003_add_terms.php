@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -7,8 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Migration_Add_terms extends CI_Migration {
 
-    public function up()
-    {
+    public function up() {
         // terms
         $this->dbforge->add_field(array(
             'term_id' => array(
@@ -30,9 +28,7 @@ class Migration_Add_terms extends CI_Migration {
         $this->dbforge->create_table('terms');
     }
 
-    public function down()
-    {
+    public function down() {
         $this->dbforge->drop_table('terms');
     }
-
 }

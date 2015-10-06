@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -7,8 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Migration_Add_options extends CI_Migration {
 
-    public function up()
-    {
+    public function up() {
         // options
         $this->dbforge->add_field(array(
             'option_id' => array(
@@ -29,9 +27,7 @@ class Migration_Add_options extends CI_Migration {
         $this->dbforge->create_table('options');
     }
 
-    public function down()
-    {
+    public function down() {
         $this->dbforge->drop_table('options');
     }
-
 }

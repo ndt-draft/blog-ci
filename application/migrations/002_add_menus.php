@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -7,8 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Migration_Add_menus extends CI_Migration {
 
-    public function up()
-    {
+    public function up() {
         // menus
         $this->dbforge->add_field(array(
             'menu_id' => array(
@@ -36,9 +34,7 @@ class Migration_Add_menus extends CI_Migration {
         $this->dbforge->create_table('menus');
     }
 
-    public function down()
-    {
+    public function down() {
         $this->dbforge->drop_table('menus');
     }
-
 }
