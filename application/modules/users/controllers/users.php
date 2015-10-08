@@ -17,4 +17,8 @@ class Users extends MX_Controller {
         );
         $this->lang->load('en_admin', 'english');
     }
+
+    public function index() {
+        $this->load->view('users/users/signin');
+    }
 }
