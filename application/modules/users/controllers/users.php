@@ -19,6 +19,6 @@ class Users extends MX_Controller {
     }
 
     public function index() {
-        $this->load->view('users/users/signin');
+        $this->load->view('users/users/new_user');
     }
 }
