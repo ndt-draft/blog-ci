@@ -32,7 +32,7 @@ class Signin extends CI_Controller {
 
             if (false == $this->form_validation->run()) {
                 // $this->load->view('common/login_header');
-                $this->load->view('users/signin');
+                $this->load->view('users/users/signin');
                 // $this->load->view('common/footer');
             } else {
                 $usr_email = $this->input->post('usr_email');

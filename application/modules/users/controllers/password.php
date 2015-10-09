@@ -153,7 +153,7 @@ class Password extends CI_Controller {
                         $usr_lname = $row->usr_lname;
                     }
 
-                    $path = APPPATH . 'modules/users/views/email_scripts';
+                    $path = APPPATH . 'modules/users/views/email_scripts/new_password.txt';
                     $file = read_file($path);
                     $file = str_replace('%usr_fname%', $usr_fname, $file);
                     $file = str_replace('%usr_lname%', $usr_lname, $file);
