@@ -5,12 +5,12 @@ class Me extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper(array('form', 'url', 'security', 'file', 'language'));
-        $this->load->model('Users_model');
+        $this->load->model('users_model');
         $this->load->library('session');
 
         // load language file
         $this->lang->load('en_admin', 'english');
-        $this->lang->library('form_validation');
+        $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="alert alert-warning" role="alert">', '</div>');
 
         if ($this->session->userdata('logged_in') == false ||
@@ -32,22 +32,22 @@ class Me extends CI_Controller {
         $this->form_validation->set_rules('usr_town_city', $this->lang->line('usr_town_city'), 'required|min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_zip_pcode', $this->lang->line('usr_zip_pcode'), 'required|min_length[1]|max_length[125]');
 
-        $data['id'] => $this->session->userdata('usr_id');
+        $id = $data['id'] = $this->session->userdata('usr_id');
 
         $data['page_heading'] = 'Edit my details';
 
         if ($this->form_validation->run() == false) {
-            $query = $this->users_model->get_user_details($data['id']);
+            $query = $this->users_model->get_user_details($id);
 
             foreach ($query->result() as $row) {
-                $usr_fname = $row->$usr_fname;
-                $usr_lname = $row->$usr_lname;
-                $usr_uname = $row->$usr_uname;
-                $usr_email = $row->$usr_email;
-                $usr_add1 = $row->$usr_add1;
-                $usr_add2 = $row->$usr_add2;
-                $usr_add3 = $row->$usr_add3;
-                $usr_town_city = $row->$usr_town_city;
+                $usr_fname = $row->usr_fname;
+                $usr_lname = $row->usr_lname;
+                $usr_uname = $row->usr_uname;
+                $usr_email = $row->usr_email;
+                $usr_add1 = $row->usr_add1;
+                $usr_add2 = $row->usr_add2;
+                $usr_add3 = $row->usr_add3;
+                $usr_town_city = $row->usr_town_city;
                 $usr_zip_pcode = $row->usr_zip_pcode;
             }
 
@@ -87,7 +87,7 @@ class Me extends CI_Controller {
                 'name' => 'usr_confirm_email',
                 'class' => 'form-control',
                 'id' => 'usr_confirm_email',
-                'value' => set_value('usr_confirm_email', $usr_confirm_email),
+                'value' => set_value('usr_confirm_email', $usr_email),
                 'max_length' => '100',
                 'size' => '35'
             );

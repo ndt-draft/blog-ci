@@ -3,7 +3,7 @@
 class Password extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Users_model');
+        $this->load->model('users_model');
         $this->load->helper(array(
             'url',
             'form',
@@ -14,11 +14,11 @@ class Password extends CI_Controller {
         ));
         $this->load->library(array('session', 'form_validation'));
         $this->lang->load('en_admin', 'english');
-        $this->form_valition->set_error_delimiters('<div class="bs-callout bs-callout-error">', '</div>');
+        $this->form_validation->set_error_delimiters('<div class="bs-callout bs-callout-error">', '</div>');
     }
 
     public function index() {
-        redirect('password/forgot_password');
+        redirect('users/password/forgot_password');
     }
 
     public function forgot_password() {
@@ -28,9 +28,9 @@ class Password extends CI_Controller {
             'required|min_length[5]|max_length[125]|valid_email'
         );
 
-        if ($this->form_valition->run() == false) {
+        if ($this->form_validation->run() == false) {
             // $this->load->view('common/login_header');
-            $this->load->view('users/forgot_password');
+            $this->load->view('users/users/forgot_password');
             // $this->load->view('common/footer');
         } else {
             $email = $this->input->post('usr_email');
@@ -51,7 +51,7 @@ class Password extends CI_Controller {
                         $usr_lname = $row->usr_lname;
                     }
 
-                    $link = base_url('users/password/new_password/').$code;
+                    $link = base_url('users/password/new_password').'/'.$code;
                     $path = APPPATH . 'modules/users/views/email_scripts/reset_password.txt';
                     $file = read_file($path);
                     $file = str_replace('%usr_fname%', $usr_fname, $file);
@@ -59,13 +59,13 @@ class Password extends CI_Controller {
                     echo $file = str_replace('%link%', $link, $file);
 
                     if (mail($email, $this->lang->line('email_subject_reset_password'), $file, 'From: me@domain.com')) {
-                        redirect('signin');
+                        redirect('users/signin');
                     }
                 } else {
-                    redirect('password/forgot_password');
+                    redirect('users/password/forgot_password');
                 }
             } else {
-                redirect('password/forgot_password');
+                redirect('users/password/forgot_password');
             }
         }
     }
@@ -83,19 +83,19 @@ class Password extends CI_Controller {
         );
         $this->form_validation->set_rules(
             'usr_password1',
-            $this->lang->line('signin_new_pwd_email'),
+            $this->lang->line('signin_new_pwd_pwd'),
             'required|min_length[5]|max_length[125]'
         );
         $this->form_validation->set_rules(
             'usr_password2',
-            $this->lang->line('signin_new_pwd_email'),
+            $this->lang->line('signin_new_pwd_confirm'),
             'required|min_length[5]|max_length[125]|matches[usr_password1]'
         );
 
         if ($this->input->post()) {
             $data['code'] = xss_clean($this->input->post('code'));
         } else {
-            $data['code'] = xss_clean($this->uri->segment(3));
+            $data['code'] = xss_clean($this->uri->segment(4));
         }
 
         if ($this->form_validation->run() == false) {
@@ -131,7 +131,7 @@ class Password extends CI_Controller {
             );
 
             // $this->load->view('common/login_header', $data);
-            $this->load->view('users/new_password', $data);
+            $this->load->view('users/users/new_password', $data);
             // $this->load->view('common/footer', $data);
         } else {
             $email = xss_clean($this->input->post('usr_email'));
@@ -139,7 +139,8 @@ class Password extends CI_Controller {
             if (!$this->users_model->does_code_match($data, $email)) {
                 redirect('users/forgot_password');
             } else {
-                $hash = $this->encrypt->sha1($this->input->post('usr_password1'));
+                $password = $this->input->post('usr_password1');
+                $hash = $this->encrypt->sha1($password);
                 $data = array(
                     'usr_hash' => $hash,
                     'usr_email' => $email

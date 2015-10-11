@@ -3,7 +3,7 @@
 class Password_model extends CI_Model {
 
     public function __construct() {
-        parent::__construct();
+        $this->load->database();
     }
 
     public function does_code_match($code, $email) {

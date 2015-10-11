@@ -46,6 +46,7 @@ $lang['register_first_name'] = "First Name";
 $lang['register_last_name'] = "Last Name";
 $lang['register_email'] = "Email";
 // Emails
+$lang['email_subject_new_user'] = "Your account details.";
 $lang['email_subject_new_password'] = "Your new password.";
 $lang['email_subject_reset_password'] = "Reset your password.";
 // New/Edit User

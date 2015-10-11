@@ -3,7 +3,7 @@
 class Users_model extends CI_Model {
 
     public function __construct() {
-        parent::__construct();
+        $this->load->database();
     }
 
     public function get_all_users() {
@@ -72,7 +72,12 @@ class Users_model extends CI_Model {
     }
 
     public function update_user_password($data) {
-        $this->db->where('usr_id', $data['usr_id']);
+        if (isset($data['usr_id'])) {
+            $this->db->where('usr_id', $data['usr_id']);
+        } elseif(isset($data['usr_email'])) {
+            $this->db->where('usr_email', $data['usr_email']);
+            unset($data['usr_email']);
+        }
         $result = $this->db->update('users', $data);
         if ($result) {
             return true;

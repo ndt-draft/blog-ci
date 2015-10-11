@@ -5,7 +5,7 @@
 <p class="lead"><?php echo $this->lang->line('usr_form_instruction'); ?></p>
 
 <div class="span8">
-    <?php echo form_open('me/index', 'role="form"'); ?>
+    <?php echo form_open('users/me/index', 'role="form"'); ?>
         <div class="form-group">
             <?php echo form_error('usr_fname'); ?>
             <label for="usr_fname"><?php echo $this->lang->line('usr_fname'); ?></label>
@@ -68,4 +68,4 @@
     <?php echo form_close(); ?>
 </div>
 
-<?php echo anchor('me/pwd_email/' . $id, 'Reset Email'); ?>
+<?php echo anchor('users/pwd_email/' . $id, 'Send Password Reset Email'); ?>

@@ -5,7 +5,7 @@
 <?php endif; ?>
 <div>
     <?php echo validation_errors(); ?>
-    <?php echo form_open('password/forgot_password', 'class="form-signin" role="form"'); ?>
+    <?php echo form_open('users/password/forgot_password', 'class="form-signin" role="form"'); ?>
         <h2 class="form-signin-heading"><?php echo $this->lang->line('forgot_pwd_header'); ?></h2>
         <p class="lead"><?php echo $this->lang->line('forgot_pwd_instruction'); ?></p>
         <?php echo form_input(array(

@@ -15,7 +15,7 @@ class Signin extends CI_Controller {
             if ($this->session->userdata('usr_access_level') == 1) {
                 redirect('users');
             } else {
-                redirect('me');
+                redirect('users/me');
             }
         } else {
             // set validations
@@ -38,8 +38,8 @@ class Signin extends CI_Controller {
                 $usr_email = $this->input->post('usr_email');
                 $password = $this->input->post('usr_password');
 
-                $this->load->model('Signin_model');
-                $query = $this->signin_model->does_user_exist($user_email);
+                $this->load->model('signin_model');
+                $query = $this->signin_model->does_user_exist($usr_email);
 
                 if ($query->num_rows() == 1) {
                     foreach ($query->result() as $row) {
@@ -58,7 +58,7 @@ class Signin extends CI_Controller {
                                 $data = array(
                                     'usr_id'           => $row->usr_id,
                                     'acc_id'           => $row->acc_id,
-                                    'usr_email'        => $row->usr_id,
+                                    'usr_email'        => $row->usr_email,
                                     'usr_access_level' => $row->usr_access_level,
                                     'logged_in'        => true,
                                 );
@@ -70,7 +70,7 @@ class Signin extends CI_Controller {
                                 } elseif ($data['usr_access_level'] == 1) {
                                     redirect('users');
                                 } else {
-                                    redirect('me');
+                                    redirect('users/me');
                                 }
                             }
 
@@ -86,6 +86,6 @@ class Signin extends CI_Controller {
 
     public function signout() {
         $this->session->sess_destroy();
-        redirect('signin');
+        redirect('users/signin');
     }
 }
