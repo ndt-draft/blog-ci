@@ -11,7 +11,7 @@
         </h2>
         <div class="form-group">
             <input type="email" class="form-control" name="usr_email" required
-            autofocus placeholder="<?php echo $this->lang->line(); ?>">
+            autofocus placeholder="<?php echo $this->lang->line('admin_login_email'); ?>">
         </div>
         <div class="form-group">
             <input type="password" class="form-control" name="usr_password" required

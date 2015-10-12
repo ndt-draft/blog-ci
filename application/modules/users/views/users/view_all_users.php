@@ -1,4 +1,7 @@
 <h2><?php echo $page_heading; ?></h2>
+<p class="lead">
+    <?php echo anchor('users/new_user', 'New user', 'class="btn btn-default"'); ?>
+</p>
 <table class="table table-bordered">
     <thead>
         <tr>
