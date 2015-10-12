@@ -5,6 +5,7 @@ class Me extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper(array('form', 'url', 'security', 'file', 'language'));
+        $this->load->helper(array('menus', 'options')); // custom helpers
         $this->load->model('users_model');
         $this->load->library('session');
 
@@ -132,10 +133,10 @@ class Me extends CI_Controller {
                 'size' => '35'
             );
 
-            // $this->load->view('common/header', $data);
+            $this->load->view('blog/header', $data);
             // $this->load->view('nav/top_nav', $data);
             $this->load->view('users/users/me', $data);
-            // $this->load->view('common/footer', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             $data = array(
                 'usr_fname'     => $this->input->post('usr_fname'),
@@ -176,7 +177,7 @@ class Me extends CI_Controller {
                 'value' => set_value('usr_new_pwd_1', ''),
                 'maxlength' => '100',
                 'size' => '35',
-                'placeholder' => $this->lang->line('signin_new_pwd_confirm')
+                'placeholder' => $this->lang->line('signin_new_pwd_pwd')
             );
             $data['usr_new_pwd_2'] = array(
                 'name' => 'usr_new_pwd_2',
@@ -190,9 +191,9 @@ class Me extends CI_Controller {
             );
             $data['submit_path'] = 'me/change_password';
 
-            // $this->load->view('common/login_header', $data);
+            $this->load->view('blog/header', $data);
             $this->load->view('users/users/change_password', $data);
-            // $this->load->view('common/login_header', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             $hash = $this->encrypt->sha1($this->input->post('usr_new_pwd_1'));
             $data = array(

@@ -350,10 +350,10 @@ class Users extends MX_Controller {
 
         if ($this->form_validation->run() == false) {
             $data['query'] = $this->users_model->get_user_details($id);
-            // $this->load->view('common/header', $data);
+            $this->load->view('blog/header', $data);
             // $this->load->view('nav/top_nav', $data);
             $this->load->view('users/users/delete_user', $data);
-            // $this->load->view('common/footer', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             if ($this->users_model->delete_user($id)) {
                 redirect('users');

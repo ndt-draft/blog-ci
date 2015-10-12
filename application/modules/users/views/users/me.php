@@ -68,4 +68,4 @@
     <?php echo form_close(); ?>
 </div>
 
-<?php echo anchor('users/pwd_email/' . $id, 'Send Password Reset Email'); ?>
+<?php echo anchor('users/me/change_password', 'Change Password'); ?>

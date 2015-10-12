@@ -75,6 +75,4 @@
             <?php echo anchor('users', $this->lang->line('common_form_elements_cancel')); ?>
         </div>
     <?php echo form_close(); ?>
-
-    <?php echo anchor('users/pwd_email/' . $id['usr_id'], 'Send Password Reset Email'); ?>
 </div>
