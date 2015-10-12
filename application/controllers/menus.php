@@ -4,6 +4,7 @@ class Menus extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('menus_model');
+        $this->load->library('session');
     }
 
     /**

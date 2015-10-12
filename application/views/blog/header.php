@@ -27,39 +27,36 @@
                 <div class="collapse navbar-collapse" id="main-nav">
                     <?php nav_menu('primary'); ?>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Sign up</a></li>
-                        <li><a href="#">Sign in</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="">Signed in as <strong>john-doe</strong></a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown"><a href="#">Your Profile</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="">Signed in as <strong>john-doe</strong></a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Your Profile</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Sign out</a></li>
-                                    </ul>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Sign out</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="">Signed in as <strong class="text-danger">admin</strong></a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="<?php echo base_url('me'); ?>">Your Profile</a></li>
-                                <li><a href="<?php echo base_url('users'); ?>">Users</a></li>
-                                <li><a href="<?php echo base_url('menus'); ?>">Menus</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="<?php echo base_url('settings'); ?>">Settings</a></li>
-                                <li><a href="<?php echo base_url('signout'); ?>">Sign out</a></li>
-                            </ul>
-                        </li>
+                        <?php if (!$this->session->userdata('logged_in')) : ?>
+                            <li><?php echo anchor('users/register', 'Register'); ?></li>
+                            <li><?php echo anchor('users/signin', 'Sign in'); ?></li>
+                        <?php elseif ($this->session->userdata('usr_access_level') > 1) : ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo base_url('users/me'); ?>">Signed in as <strong><?php echo $this->session->userdata('usr_email'); ?></strong></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><?php echo anchor('users/me', 'Your profile'); ?></li>
+                                    <li><?php echo anchor('users/me/change_password', 'Change password'); ?></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><?php echo anchor('users/signin/signout', 'Sign out'); ?></li>
+                                </ul>
+                            </li>
+                        <?php else : ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo base_url('users/me'); ?>">Signed in as <strong><?php echo $this->session->userdata('usr_email'); ?></strong></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="<?php echo base_url('users/me'); ?>">Your Profile</a></li>
+                                    <li><a href="<?php echo base_url('users'); ?>">Users</a></li>
+                                    <li><a href="<?php echo base_url('menus'); ?>">Menus</a></li>
+                                    <li><?php echo anchor('users/me/change_password', 'Change password'); ?></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><?php echo anchor('users/signin/signout', 'Sign out'); ?></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

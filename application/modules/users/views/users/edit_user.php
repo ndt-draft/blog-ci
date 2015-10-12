@@ -57,7 +57,7 @@
         <div class="form-group">
             <?php echo form_error('usr_access_level'); ?>
             <label for="usr_access_level"><?php echo $this->lang->line('usr_access_level'); ?></label>
-            <?php echo form_dropdown('usr_access_level', $usr_access_level_options, $usr_access_level); ?>
+            <?php echo form_dropdown('usr_access_level', $usr_access_level_options, $usr_access_level, 'class="form-control"'); ?>
         </div>
         <div class="form-group">
             <?php echo form_error('usr_is_active'); ?>

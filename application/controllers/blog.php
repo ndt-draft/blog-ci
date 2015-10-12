@@ -5,6 +5,7 @@ class Blog extends CI_Controller {
         parent::__construct();
         $this->load->helper(array('options', 'menus'));
         $this->load->model('posts_model');
+        $this->load->library('session');
     }
 
     public function index() {

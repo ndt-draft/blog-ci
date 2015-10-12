@@ -7,7 +7,7 @@ class Register extends CI_Controller {
         $this->load->helper(array('menus', 'options'));
         $this->load->model('register_model');
         $this->lang->load('en_admin', 'english');
-        $this->load->library(array('encrypt', 'form_validation'));
+        $this->load->library(array('encrypt', 'form_validation', 'session'));
         $this->form_validation->set_error_delimiters('<div class="alert alert-warning" role="alert">', '</div>');
     }
 

@@ -56,7 +56,7 @@
         </div>
         <div class="form-group">
             <label for="usr_access_level"><?php echo $this->lang->line('usr_access_level'); ?></label>
-            <?php echo form_dropdown('usr_access_level', $usr_access_level_options, $usr_access_level); ?>
+            <?php echo form_dropdown('usr_access_level', $usr_access_level_options, $usr_access_level, 'class="form-control"'); ?>
         </div>
         <div class="form-group">
             <label for="usr_is_active"><?php echo $this->lang->line('usr_is_active'); ?></label>
