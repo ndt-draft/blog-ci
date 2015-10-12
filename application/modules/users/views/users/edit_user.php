@@ -1,4 +1,3 @@
-<?php echo validation_errors(); ?>
 <div class="page-header">
     <h1><?php echo $page_heading; ?></h1>
 </div>

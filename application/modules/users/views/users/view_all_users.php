@@ -20,7 +20,7 @@
                     <td><?php echo anchor(
                         'users/edit_user/' . $row->usr_id,
                         $this->lang->line('common_form_elements_action_edit')
-                    ) . anchor(
+                    ) . ' ' . anchor(
                         'users/delete_user/' . $row->usr_id,
                         $this->lang->line('common_form_elements_action_delete')
                     ); ?></td>

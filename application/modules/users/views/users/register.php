@@ -5,12 +5,18 @@
             <h2 class="form-signin-heading">
                 <?php echo $this->lang->line('register_page_title'); ?>
             </h2>
-            <input type="text" class="form-control" name="usr_fname" autofocus
+            <div class="form-group">
+                <input type="text" class="form-control" name="usr_fname" autofocus
                 placeholder="<?php echo $this->lang->line('register_first_name'); ?>">
-            <input type="text" class="form-control" name="usr_lname"
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="usr_lname"
                 placeholder="<?php echo $this->lang->line('register_last_name'); ?>">
-            <input type="email" class="form-control" name="usr_email"
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="usr_email"
                 placeholder="<?php echo $this->lang->line('register_email'); ?>">
+            </div>
             <?php echo form_submit(
                 'submit',
                 'Register',

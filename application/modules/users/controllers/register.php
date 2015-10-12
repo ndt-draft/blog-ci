@@ -29,7 +29,7 @@ class Register extends CI_Controller {
         );
 
         if (false == $this->form_validation->run()) {
-            // $this->load->view('common/login_header');
+            $this->load->view('blog/header');
             /**
              * @see http://stackoverflow.com/q/6269330
              * look for hmvc module "users"
@@ -37,7 +37,7 @@ class Register extends CI_Controller {
              * and load register.php file
              */
             $this->load->view('users/users/register');
-            // $this->load->view('common/footer');
+            $this->load->view('blog/footer');
         } else {
             // create hash from user password
             $password = random_string('alnum', 8);

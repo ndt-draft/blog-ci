@@ -14,7 +14,7 @@ class Password extends CI_Controller {
         ));
         $this->load->library(array('session', 'form_validation'));
         $this->lang->load('en_admin', 'english');
-        $this->form_validation->set_error_delimiters('<div class="bs-callout bs-callout-error">', '</div>');
+        $this->form_validation->set_error_delimiters('<div class="alert alert-warning">', '</div>');
     }
 
     public function index() {
@@ -29,9 +29,9 @@ class Password extends CI_Controller {
         );
 
         if ($this->form_validation->run() == false) {
-            // $this->load->view('common/login_header');
+            $this->load->view('blog/header');
             $this->load->view('users/users/forgot_password');
-            // $this->load->view('common/footer');
+            $this->load->view('blog/footer');
         } else {
             $email = $this->input->post('usr_email');
             $num_res = $this->users_model->count_results($email);
@@ -130,9 +130,9 @@ class Password extends CI_Controller {
                 'placeholder' => $this->lang->line('signin_new_pwd_confirm')
             );
 
-            // $this->load->view('common/login_header', $data);
+            $this->load->view('blog/header', $data);
             $this->load->view('users/users/new_password', $data);
-            // $this->load->view('common/footer', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             $email = xss_clean($this->input->post('usr_email'));
 

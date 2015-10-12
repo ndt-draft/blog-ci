@@ -5,7 +5,7 @@ class Users extends MX_Controller {
      * @see https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/src#markdown-header-features
      */
     public $autoload = array(
-        'helper' => array('form', 'url', 'security', 'language', 'file'),
+        'helper' => array('form', 'url', 'security', 'language', 'file', 'menus', 'options'),
         'libraries' => array('session', 'form_validation')
     );
 
@@ -28,10 +28,10 @@ class Users extends MX_Controller {
     public function index() {
         $data['page_heading'] = 'Viewing users';
         $data['query'] = $this->users_model->get_all_users();
-        // $this->load->view('common/header', $data);
+        $this->load->view('blog/header', $data);
         // $this->load->view('nav/top_nav', $data);
         $this->load->view('users/users/view_all_users', $data);
-        // $this->load->view('common/footer', $data);
+        $this->load->view('blog/footer', $data);
     }
 
     public function new_user() {
@@ -142,10 +142,10 @@ class Users extends MX_Controller {
             $data['usr_access_level'] = set_value('usr_access_level', '');
             $data['usr_is_active'] = set_value('usr_is_active', '');
 
-            // $this->load->view('common/header', $data);
+            $this->load->view('blog/header', $data);
             // $this->load->view('nav/top_nav', $data);
             $this->load->view('users/users/new_user', $data);
-            // $this->load->view('common/footer', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             $password = random_string('alnum', 8);
             $hash = $this->encrypt->sha1($password);
@@ -190,11 +190,15 @@ class Users extends MX_Controller {
         $this->form_validation->set_rules('usr_access_level', $this->lang->line('usr_zip_pcode'), 'min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_is_active', $this->lang->line('usr_is_active'), 'min_length[1]|max_length[1]|integer|is_natural');
 
-
         if ($this->input->post()) {
             $id = $this->input->post('usr_id');
         } else {
             $id = $this->uri->segment(3);
+        }
+
+        // empty id, return immediately
+        if (!$id) {
+            redirect('users');
         }
 
         $data['page_heading'] = 'Edit user';
@@ -305,13 +309,13 @@ class Users extends MX_Controller {
                 5 => 5,
             );
             $data['usr_access_level'] = set_value('usr_access_level', $usr_access_level);
-            $data['usr_is_active'] = $usr_is_active;
+            $data['usr_is_active'] = set_value('usr_is_active', $usr_is_active);
             $data['id'] = array('usr_id' => set_value('usr_id', $usr_id));
 
-            // $this->load->view('common/header', $data);
+            $this->load->view('blog/header', $data);
             // $this->load->view('nav/top_nav', $data);
             $this->load->view('users/users/edit_user', $data);
-            // $this->load->view('common/footer', $data);
+            $this->load->view('blog/footer', $data);
         } else {
             $data = array(
                 'usr_fname' => $this->input->post('usr_fname'),

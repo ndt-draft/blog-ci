@@ -5,6 +5,7 @@ class Signin extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper(array('form', 'url', 'security'));
+        $this->load->helper(array('menus', 'options'));
         $this->load->library(array('session', 'form_validation'));
         $this->lang->load('en_admin', 'english');
         $this->form_validation->set_error_delimiters('<div class="alert alert-warning" role="alert">', '</div>');
@@ -31,9 +32,9 @@ class Signin extends CI_Controller {
             );
 
             if (false == $this->form_validation->run()) {
-                // $this->load->view('common/login_header');
+                $this->load->view('blog/header');
                 $this->load->view('users/users/signin');
-                // $this->load->view('common/footer');
+                $this->load->view('blog/footer');
             } else {
                 $usr_email = $this->input->post('usr_email');
                 $password = $this->input->post('usr_password');
@@ -51,9 +52,9 @@ class Signin extends CI_Controller {
                             // compare the generated hash with that in the database
                             if ($hash != $row->usr_hash) {
                                 $data['login_fail'] = true;
-                                // $this->load->view('common/login_header');
+                                $this->load->view('blog/header');
                                 $this->load->view('users/users/signin', $data);
-                                // $this->load->view('common/footer');
+                                $this->load->view('blog/footer');
                             } else {
                                 $data = array(
                                     'usr_id'           => $row->usr_id,
