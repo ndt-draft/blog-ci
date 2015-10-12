@@ -15,8 +15,8 @@ class Users extends MX_Controller {
             '<div class="alert alert-warning" role="alert">',
             '</div>'
         );
-        $this->load->model('Users_model');
-        $this->load->model('Password_model');
+        $this->load->model('users_model');
+        $this->load->model('password_model');
         $this->lang->load('en_admin', 'english');
 
         if (false == $this->session->userdata('logged_in') ||
@@ -40,7 +40,7 @@ class Users extends MX_Controller {
         $this->form_validation->set_rules('usr_lname', $this->lang->line('usr_lname'), 'required|min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_uname', $this->lang->line('usr_uname'), 'required|min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_email', $this->lang->line('usr_email'), 'required|min_length[1]|max_length[255]|valid_email|is_unique[users.usr_email]');
-        $this->form_validation->set_rules('usr_email', $this->lang->line('usr_email'), 'required|min_length[1]|max_length[255]|valid_email|matches[usr_email]');
+        $this->form_validation->set_rules('usr_confirm_email', $this->lang->line('usr_confirm_email'), 'required|min_length[1]|max_length[255]|valid_email|matches[usr_email]');
         $this->form_validation->set_rules('usr_add1', $this->lang->line('usr_add1'), 'required|min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_add2', $this->lang->line('usr_add2'), 'required|min_length[1]|max_length[125]');
         $this->form_validation->set_rules('usr_add3', $this->lang->line('usr_add3'), 'required|min_length[1]|max_length[125]');
@@ -132,13 +132,15 @@ class Users extends MX_Controller {
                 'max_length' => '100',
                 'size'       => '35'
             );
-            $data['usr_access_level'] = array(
+            $data['usr_access_level_options'] = array(
                 1 => 1,
                 2 => 2,
                 3 => 3,
                 4 => 4,
                 5 => 5,
             );
+            $data['usr_access_level'] = set_value('usr_access_level', '');
+            $data['usr_is_active'] = set_value('usr_is_active', '');
 
             // $this->load->view('common/header', $data);
             // $this->load->view('nav/top_nav', $data);
@@ -302,7 +304,7 @@ class Users extends MX_Controller {
                 4 => 4,
                 5 => 5,
             );
-            $data['usr_access_level'] = array('value' => set_value('usr_access_level', ''));
+            $data['usr_access_level'] = set_value('usr_access_level', $usr_access_level);
             $data['usr_is_active'] = $usr_is_active;
             $data['id'] = array('usr_id' => set_value('usr_id', $usr_id));
 
@@ -346,7 +348,7 @@ class Users extends MX_Controller {
             $data['query'] = $this->users_model->get_user_details($id);
             // $this->load->view('common/header', $data);
             // $this->load->view('nav/top_nav', $data);
-            $this->load->view('users/delete_user', $data);
+            $this->load->view('users/users/delete_user', $data);
             // $this->load->view('common/footer', $data);
         } else {
             if ($this->users_model->delete_user($id)) {

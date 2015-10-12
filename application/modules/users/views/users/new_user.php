@@ -57,12 +57,12 @@
         </div>
         <div class="form-group">
             <label for="usr_access_level"><?php echo $this->lang->line('usr_access_level'); ?></label>
-            <?php echo form_dropdown('usr_access_level', $usr_access_level, 'large'); ?>
+            <?php echo form_dropdown('usr_access_level', $usr_access_level_options, $usr_access_level); ?>
         </div>
         <div class="form-group">
             <label for="usr_is_active"><?php echo $this->lang->line('usr_is_active'); ?></label>
-            <input type="radio" name="usr_is_active" value="<?php echo set_value('usr_is_active'); ?>"> Active
-            <input type="radio" name="usr_is_active" value="<?php echo set_value('usr_is_active'); ?>"> Inactive
+            <input type="radio" name="usr_is_active" value="1" <?php if ($usr_is_active == 1) { echo 'checked'; } ?>> Active
+            <input type="radio" name="usr_is_active" value="0" <?php if ($usr_is_active == 0) { echo 'checked'; } ?>> Inactive
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success">

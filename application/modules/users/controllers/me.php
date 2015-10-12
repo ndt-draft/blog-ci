@@ -15,7 +15,7 @@ class Me extends CI_Controller {
 
         if ($this->session->userdata('logged_in') == false ||
             !$this->session->userdata('usr_access_level') >= 2) {
-            redirect('signin/signout');
+            redirect('users/signin');
         }
     }
 
@@ -191,16 +191,16 @@ class Me extends CI_Controller {
             $data['submit_path'] = 'me/change_password';
 
             // $this->load->view('common/login_header', $data);
-            $this->load->view('users/change_password', $data);
+            $this->load->view('users/users/change_password', $data);
             // $this->load->view('common/login_header', $data);
         } else {
             $hash = $this->encrypt->sha1($this->input->post('usr_new_pwd_1'));
             $data = array(
                 'usr_hash' => $hash,
-                'usr_id' => $this->session->user_data('usr_id')
+                'usr_id' => $this->session->userdata('usr_id')
             );
             if ($this->users_model->update_user_password($data)) {
-                redirect('signin/signout');
+                redirect('users/signin/signout');
             }
         }
     }

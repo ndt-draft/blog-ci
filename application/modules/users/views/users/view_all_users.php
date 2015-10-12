@@ -1,4 +1,4 @@
-<h2><?php echo $heading; ?></h2>
+<h2><?php echo $page_heading; ?></h2>
 <table class="table table-bordered">
     <thead>
         <tr>

@@ -4,7 +4,7 @@
     </div>
 <?php endif; ?>
 <?php echo validation_errors(); ?>
-<?php echo form_open('me/change_password', 'class="form-signin" role="form"'); ?>
+<?php echo form_open('users/me/change_password', 'class="form-signin" role="form"'); ?>
     <h2 class="form-signin-heading"><?php echo $this->lang->line('forgot_pwd_header'); ?></h2>
     <p class="lead"><?php $this->lang->line('forgot_pwd_instruction'); ?></p>
     <table border="0">
